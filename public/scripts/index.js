@@ -1,3 +1,5 @@
+// require('dotenv').config();
+
 const dropZone = document.querySelector(".drop-zone");
 const fileInput = document.getElementById("file-input");
 const browseBtn = document.querySelector(".browseBtn");
@@ -17,6 +19,8 @@ const status = document.querySelector(".status");
 
 const toast = document.querySelector(".toast");
 
+const APP_BASE_URL = "https://quick-file-share.herokuapp.com";
+// const APP_BASE_URL = "http://localhost:3000";
 uploadContainer.addEventListener("drop", (e) => {
   e.preventDefault();
 })
@@ -66,7 +70,7 @@ const uploadFile = async () => {
       return;
     }
     const formData = new FormData();
-    const uploadUrl = 'http://localhost:3000/api/files'
+    const uploadUrl = `${APP_BASE_URL}/api/files`;
     formData.append("myFile", file);
 
     // const xhr = new XMLHttpRequest();
@@ -88,7 +92,7 @@ const uploadFile = async () => {
 
 //upload file with progress bar
 // const uploadFile = () => {
-//     const uploadURL = 'http://localhost:3000/api/files'
+//     const uploadURL = `${process.env.APP_BASE_URL}/api/files`;
 
 //   console.log("file added uploading");
   
@@ -168,7 +172,7 @@ emailForm.addEventListener("submit", (e) => {
     emailTo: emailForm.elements["email-to"].value,
     emailFrom: emailForm.elements["email-from"].value,
   };
-  const mailSendUrl = 'http://localhost:3000/api/files/send';
+  const mailSendUrl = `${APP_BASE_URL}/api/files/send`;
   fetch(mailSendUrl, {
     method: "post",
     headers: {
