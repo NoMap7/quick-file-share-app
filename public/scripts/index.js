@@ -20,8 +20,8 @@ const uploadStatus = document.querySelector(".upload-status");
 
 const toast = document.querySelector(".toast");
 
-// const APP_BASE_URL = "https://quick-file-share.herokuapp.com";
-const APP_BASE_URL = "http://localhost:3000";
+const APP_BASE_URL = "https://quick-file-share.herokuapp.com";
+// const APP_BASE_URL = "http://localhost:3000";
 uploadContainer.addEventListener("drop", (e) => {
   e.preventDefault();
 })
