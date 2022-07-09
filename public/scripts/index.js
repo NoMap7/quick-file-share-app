@@ -11,16 +11,17 @@ const sharingContainer = document.querySelector(".sharing-container");
 const linkCopyBtn = document.querySelector("#linkCopyBtn");
 const emailForm = document.querySelector("#emailForm");
 
+const uploadingGif = document.querySelector(".uploading");
 const bgProgress = document.querySelector(".bg-progress");
 const progressPercent = document.querySelector("#progressPercent");
 const progressContainer = document.querySelector(".progress-container");
 const progressBar = document.querySelector(".progress-bar");
-const status = document.querySelector(".status");
+const uploadStatus = document.querySelector(".upload-status");
 
 const toast = document.querySelector(".toast");
 
-const APP_BASE_URL = "https://quick-file-share.herokuapp.com";
-// const APP_BASE_URL = "http://localhost:3000";
+// const APP_BASE_URL = "https://quick-file-share.herokuapp.com";
+const APP_BASE_URL = "http://localhost:3000";
 uploadContainer.addEventListener("drop", (e) => {
   e.preventDefault();
 })
@@ -81,6 +82,7 @@ const uploadFile = async () => {
     // }
     // xhr.open("POST", uploadUrl);
     // xhr.send(formData);
+    uploadingGif.style.display = "block";
     const res = await fetch(uploadUrl, {
       method: "post",
       body: formData,
@@ -89,72 +91,20 @@ const uploadFile = async () => {
     onUploadSuccess(data);
     console.log(data)
 }
-
-//upload file with progress bar
-// const uploadFile = () => {
-//     const uploadURL = `${process.env.APP_BASE_URL}/api/files`;
-
-//   console.log("file added uploading");
-  
-//   files = fileInput.files;
-//   const formData = new FormData();
-//   formData.append("myfile", files[0]);
-  
-//   //show the uploader
-//   progressContainer.style.display = "block";
-  
-//   // upload file
-//   const xhr = new XMLHttpRequest();
-  
-//   // listen for upload progress
-//   xhr.upload.onprogress = function (event) {
-//     // find the percentage of uploaded
-//     let percent = Math.round((100 * event.loaded) / event.total);
-//     progressPercent.innerText = percent;
-//     const scaleX = `scaleX(${percent / 100})`;
-//     bgProgress.style.transform = scaleX;
-//     progressBar.style.transform = scaleX;
-//   };
-  
-//   // handle error
-//   xhr.upload.onerror = function () {
-//     showToast(`Error in upload: ${xhr.status}.`);
-//     fileInput.value = ""; // reset the input
-//   };
-  
-//   // listen for response which will give the link
-//   xhr.onreadystatechange = function () {
-//     if (xhr.readyState == XMLHttpRequest.DONE) {
-//       onFileUploadSuccess(xhr.responseText);
-//     }
-//   };
-  
-//   xhr.open("POST", uploadURL);
-//   xhr.send(formData);
-// };
-
-// const onFileUploadSuccess = (res) => {
-//   fileInput.value = ""; // reset the input
-//   status.innerText = "Uploaded";
-
-//   // remove the disabled attribute from form btn & make text send
-//   emailForm[2].removeAttribute("disabled");
-//   emailForm[2].innerText = "Send";
-//   progressContainer.style.display = "none"; // hide the box
-
-//   const { file: url } = JSON.parse(res);
-//   console.log(url);
-//   sharingContainer.style.display = "block";
-//   fileURL.value = url;
-// };
-
-
 const onUploadSuccess = ({file: url}) => {
   console.log(url);
   fileInput.value = "";
   sharingContainer.style.display = 'block';
+  uploadingGif.style.display = 'none';
   fileUrlInput.value = url;
 }
+
+
+
+
+
+
+
 
 
 linkCopyBtn.addEventListener("click", () => {
